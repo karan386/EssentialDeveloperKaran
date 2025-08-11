@@ -18,13 +18,16 @@ final class RemoteFeedLoaderTest: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
     
+    
+    // NOTE: naming convention to write test function names -> test -> function name to test -> behaviour we expect
+    
     func test_init_doesNotRequestDataFromURL() {
         let (_, client) = makeSUT()
         
         XCTAssertNil(client.requestedURL)
     }
     
-    func test_load_requestDataFromURL() {
+    func test_load_requestsDataFromURL() {
         let url =  URL(string: "https://a-url.com")!
         let (sut, client) = makeSUT(url: url)
         
