@@ -19,7 +19,7 @@ public final class RemoteFeedLoader: FeedLoader {
     public typealias Result = LoadFeedResult
     
     public init(url: URL, client: HTTPClient) {
-        self.url =  URL(string: "https://a-url.com")!
+        self.url =  url
         self.client = client
     }
     
