@@ -35,4 +35,8 @@ public final class LocalFeedLoader {
             completion(error)
         }
     }
+    
+    public func load() {
+        store.retrieve()
+    }
 }
