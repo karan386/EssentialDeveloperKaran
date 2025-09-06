@@ -10,9 +10,12 @@ import Foundation
 public final class LocalFeedLoader {
     private let store: FeedStore
     private let currentDate: () -> Date
-    
+    private let calendar = Calendar(identifier: .gregorian)
     public typealias SaveResult = Error?
     public typealias LoadResult = LoadFeedResult
+    private var maxCacheAgeInDays: Int {
+        return 7
+    }
     
     public init(store: FeedStore, currentDate: @escaping () -> Date) {
         self.store = store
@@ -38,18 +41,35 @@ public final class LocalFeedLoader {
     }
     
     public func load(completion: @escaping (LoadResult) -> Void) {
-        store.retrieve { error in
-            if let error = error {
-                completion(.failure(error))
-            } else {
+        store.retrieve { [unowned self] result in
+            switch result {
+            case let .found(localFeedImage, timestamp) where self.validate(timestamp):
+                completion(.success(localFeedImage.mapToModel()))
+            case .found, .empty:
                 completion(.success([]))
+            case let .failure(error):
+                completion(.failure(error))
             }
         }
+    }
+    
+    private func validate(_ timestamp: Date) -> Bool {
+        let calendar = Calendar(identifier: .gregorian)
+        guard let maxCacheAge = calendar.date(byAdding: .day, value: maxCacheAgeInDays, to: timestamp) else {
+            return false
+        }
+        return currentDate() < maxCacheAge
     }
 }
 
 private extension Array where Element == FeedImage {
     func mapToLocal() -> [LocalFeedImage] {
         map{ LocalFeedImage(id: $0.id, description: $0.description, location: $0.location, url: $0.url) }
+    }
+}
+
+private extension Array where Element == LocalFeedImage {
+    func mapToModel() -> [FeedImage] {
+        map{ FeedImage(id: $0.id, description: $0.description, location: $0.location, url: $0.url) }
     }
 }
