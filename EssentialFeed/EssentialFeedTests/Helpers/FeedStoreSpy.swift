@@ -1,0 +1,64 @@
+//
+//  FeedStoreSpy.swift
+//  EssentialFeedTests
+//
+//  Created by Karan Sawant on 04/09/25.
+//
+
+import XCTest
+import EssentialFeed
+
+class FeedStoreSpy: FeedStore {
+    enum ReceivedMessage: Equatable {
+        case deleteCachedFeed
+        case insert([FeedItem], Date)
+        case retrieve
+    }
+    
+    private(set) var receivedMessages = [ReceivedMessage]()
+    
+    
+    var deletionCompletions: [deletionErrorCompletion] = []
+    var insertionCompletions: [insertionErrorCompletion] = []
+    var retrieveCompletions: [retrieveErrorCompletion] = []
+    
+    
+    func deleteCachedFeed(completion: @escaping deletionErrorCompletion) {
+        deletionCompletions.append(completion)
+        receivedMessages.append(.deleteCachedFeed)
+    }
+    
+    func completeDeletion(with error: Error?, at index: Int = 0) {
+        deletionCompletions[index](error)
+    }
+    
+    func completeDeletionSuccessfully(at index: Int = 0) {
+        deletionCompletions[index](nil)
+    }
+    
+    func insert(_ items: [FeedItem], timestamp: Date, completion: @escaping insertionErrorCompletion) {
+        receivedMessages.append(.insert(items, timestamp))
+        insertionCompletions.append(completion)
+    }
+    
+    func completeInsertion(with error: Error?, at index: Int = 0) {
+        insertionCompletions[index](error)
+    }
+    
+    func completeInsertionSuccessfully(at index: Int = 0) {
+        insertionCompletions[index](nil)
+    }
+    
+    func retrieve(completion: @escaping retrieveErrorCompletion) {
+        receivedMessages.append(.retrieve)
+        retrieveCompletions.append(completion)
+    }
+    
+    func retrieveCache(with error: Error?, at index: Int = 0) {
+        retrieveCompletions[index](error)
+    }
+    
+    func completeRetrievalWithEmptyCache(at index: Int = 0) {
+        retrieveCompletions[index](nil)
+    }
+}
