@@ -11,8 +11,30 @@ import EssentialFeed
 class CodableFeedStore {
         
     private struct Cache: Codable {
-        var feed: [LocalFeedImage]
+        var feed: [CodableFeedImage]
         var timestamp : Date
+        
+        var localFeed: [LocalFeedImage] {
+            return feed.map { $0.local }
+        }
+    }
+    
+    private struct CodableFeedImage: Codable {
+        let id: UUID
+        let description: String?
+        let location: String?
+        let url: URL
+        
+        init(_ image: LocalFeedImage) {
+            id = image.id
+            description = image.description
+            location = image.location
+            url = image.url
+        }
+        
+        var local: LocalFeedImage {
+            return LocalFeedImage(id: id, description: description, location: location, url: url)
+        }
     }
     
     private let storeURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("image-feed.store")
@@ -26,12 +48,12 @@ class CodableFeedStore {
         guard let cache = try? decoder.decode(Cache.self, from: data) else {
             return completion(.empty)
         }
-        return completion(.found(cache.feed, cache.timestamp))
+        return completion(.found(cache.localFeed, cache.timestamp))
     }
     
     func insert(_ items: [LocalFeedImage], timestamp: Date, completion: @escaping FeedStore.insertionErrorCompletion) {
         let encoder = JSONEncoder()
-        let encoded = try! encoder.encode(Cache(feed: items, timestamp: timestamp))
+        let encoded = try! encoder.encode(Cache(feed: items.map(CodableFeedImage.init), timestamp: timestamp))
         try? encoded.write(to: storeURL)
         return completion(nil)
     }
