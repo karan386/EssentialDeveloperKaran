@@ -49,10 +49,12 @@ class CodableFeedStore {
         }
         
         let decoder = JSONDecoder()
-        guard let cache = try? decoder.decode(Cache.self, from: data) else {
+        do {
+            let cache = try decoder.decode(Cache.self, from: data)
+            return completion(.found(cache.localFeed, cache.timestamp))
+        } catch {
             return completion(.empty)
         }
-        return completion(.found(cache.localFeed, cache.timestamp))
     }
     
     func insert(_ items: [LocalFeedImage], timestamp: Date, completion: @escaping FeedStore.insertionErrorCompletion) {
