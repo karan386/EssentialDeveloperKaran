@@ -168,19 +168,7 @@ class CodableFeedStoreTests: XCTestCase {
     
     func test_delete_hasNoSideEffectsOnEmptyCache() {
         let sut = makeSUT()
-        
-        let exp = expectation(description: "wait for deletion")
-        
-        var expectedError: Error?
-        sut.deleteCachedFeed { receivedError in
-            expectedError = receivedError
-            exp.fulfill()
-        }
-        
-        wait(for: [exp], timeout:  1.0)
-        
-        XCTAssertNil(expectedError)
-        
+        delete(sut)
         expect(sut, toRetrieve: .empty)
     }
     
@@ -189,18 +177,11 @@ class CodableFeedStoreTests: XCTestCase {
         let feed = uniqueImageFeed().local
         let timestamp = Date()
         
-        let exp = expectation(description: "wait for deletion")
        
         let insertionError = insert((feed, timestamp), to: sut)
         XCTAssertNil(insertionError)
         
-        sut.deleteCachedFeed { receivedError in
-            XCTAssertNil(receivedError)
-            
-            exp.fulfill()
-        }
-        
-        wait(for: [exp], timeout: 1.0)
+        delete(sut)
         
         expect(sut, toRetrieve: .empty)
     }
@@ -230,6 +211,18 @@ class CodableFeedStoreTests: XCTestCase {
         wait(for: [exp], timeout: 1.0)
         
         return insertionError
+    }
+    
+    private func delete(_ sut: CodableFeedStore, file: StaticString = #file, line: UInt = #line) {
+        let exp = expectation(description: "wait for deletion")
+        
+        sut.deleteCachedFeed { receivedError in
+            XCTAssertNil(receivedError, "Cache delete successfully")
+            
+            exp.fulfill()
+        }
+        
+        wait(for: [exp], timeout: 1.0)
     }
     
     private func expect(_ sut: CodableFeedStore, toRetrieve expectedResult: RetrieveCacheFeedResult, file: StaticString = #file, line: UInt = #line) {
