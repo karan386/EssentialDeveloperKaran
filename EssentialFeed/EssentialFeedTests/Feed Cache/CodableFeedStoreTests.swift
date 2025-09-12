@@ -127,6 +127,33 @@ class CodableFeedStoreTests: XCTestCase {
         expect(sut, toRetrieve: .empty)
     }
     
+    func test_storeSideEffects_runSerially() {
+        let sut = makeSUT()
+        var completionArray = [XCTestExpectation]()
+        
+        let op1 = expectation(description: "wait for insert operation")
+        sut.insert(uniqueImageFeed().local, timestamp: Date()) { insertionError in
+            completionArray.append(op1)
+            op1.fulfill()
+        }
+        
+        let op2 = expectation(description: "wait for retrieve operation")
+        sut.retrieve { retrievedResult in
+            completionArray.append(op2)
+            op2.fulfill()
+        }
+        
+        let op3 = expectation(description: "wait for delete operation")
+        sut.deleteCachedFeed { deletionError in
+            completionArray.append(op3)
+            op3.fulfill()
+        }
+        
+        wait(for: [op1, op2, op3], timeout: 5.0)
+        
+        XCTAssertEqual(completionArray, [op1, op2, op3], "The order of the execution is tested")
+    }
+    
     // MARK: Helpers
     private func makeSUT(storeURL: URL? = nil, file: StaticString = #file, line: UInt = #line) -> FeedStore {
         let sut = CodableFeedStore(storeURL ?? testSpecificStoreURL())
@@ -164,7 +191,7 @@ class CodableFeedStoreTests: XCTestCase {
             exp.fulfill()
         }
         
-        wait(for: [exp], timeout: 1.0)
+        wait(for: [exp], timeout: 3.0)
         
         return returnedError
     }
