@@ -7,7 +7,7 @@
 
 import CoreData
 
-extension NSPersistentContainer {
+private extension NSPersistentContainer {
     enum LoadingError: Swift.Error {
         case modelNotFound
         case failedToLoadPersistentStores(Swift.Error)
@@ -92,8 +92,7 @@ public final class CoreDataFeedStore: FeedStore {
     }
     
     public func deleteCachedFeed(completion: @escaping deletionErrorCompletion) {
-        let context = self.context
-        context.perform {
+        perform { context in
             do {
                 try ManagedCache.find(context: context).map(context.delete)
                 completion(nil)
@@ -104,8 +103,7 @@ public final class CoreDataFeedStore: FeedStore {
     }
     
     public func insert(_ items: [EssentialFeed.LocalFeedImage], timestamp: Date, completion: @escaping insertionErrorCompletion) {
-        let context = self.context
-        context.perform {
+        perform { context in
             do {
                 let managedCache = try ManagedCache.newUniqueInstance(in: context)
                 managedCache.timestamp = timestamp
@@ -120,8 +118,7 @@ public final class CoreDataFeedStore: FeedStore {
     
     
     public func retrieve(completion: @escaping retrieveErrorCompletion) {
-        let context = self.context
-        context.perform {
+        perform({ context in
             do {
                 if let cache = try ManagedCache.find(context: context) {
                     completion(.found(
@@ -133,6 +130,11 @@ public final class CoreDataFeedStore: FeedStore {
             } catch {
                 completion(.failure(error))
             }
-        }
+        })
+    }
+    
+    private func perform(_ action: @escaping (NSManagedObjectContext) -> Void) {
+        let context = self.context
+        context.perform { action(context) }
     }
 }
