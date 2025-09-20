@@ -8,9 +8,31 @@
 import XCTest
 import EssentialFeed
 
+private final class RealmFeedStore {
+    func retrieve(completion: @escaping FeedStore.retrieveErrorCompletion) {
+        completion(.empty)
+    }
+}
+
 final class RealmFeedStoreTests: XCTestCase, FeedStoreSpecs {
+    
     func test_retrieve_deliversEmptyOnEmptyCache() {
+        let sut = RealmFeedStore()
         
+        let exp = expectation(description: "wait for retrieve to execute")
+        
+        sut.retrieve { retrievedData in
+            switch retrievedData {
+            case .empty:
+                break
+            default:
+                XCTFail("Found value instead of empty")
+            }
+            
+            exp.fulfill()
+        }
+        
+        wait(for: [exp], timeout: 1.0)
     }
     
     func test_retrieve_hasNoSideEffectsOnEmptyCache() {
