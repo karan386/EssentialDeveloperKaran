@@ -11,6 +11,7 @@
 		080EDF0C21B6DAE800813479 /* FeedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080EDF0B21B6DAE800813479 /* FeedImage.swift */; };
 		080EDF0E21B6DCB600813479 /* FeedLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080EDF0D21B6DCB600813479 /* FeedLoader.swift */; };
 		E701DF4E2E7E62EC00376698 /* RealmFeedStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E701DF4D2E7E62EC00376698 /* RealmFeedStoreTests.swift */; };
+		E701DF512E7E6CF700376698 /* RealmFeedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E701DF502E7E6CF300376698 /* RealmFeedStore.swift */; };
 		E7283D062E7463500008F36F /* FeedStoreSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7283D042E7460A10008F36F /* FeedStoreSpecs.swift */; };
 		E7283D082E7463B30008F36F /* XCTestCase+FeedStoreSpecs..swift in Sources */ = {isa = PBXBuildFile; fileRef = E7283D072E7463B30008F36F /* XCTestCase+FeedStoreSpecs..swift */; };
 		E7283D0A2E7543A10008F36F /* XCTestCase+FailableRetrieveFeedStoreSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7283D092E7543A10008F36F /* XCTestCase+FailableRetrieveFeedStoreSpecs.swift */; };
@@ -27,6 +28,7 @@
 		E750890B2E52C29700B71CF8 /* URLSessionHTTPCLientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E750890A2E52C29700B71CF8 /* URLSessionHTTPCLientTests.swift */; };
 		E774B6FB2E6939AF00673CBB /* FeedStoreSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = E774B6FA2E6939AF00673CBB /* FeedStoreSpy.swift */; };
 		E774B6FC2E6939AF00673CBB /* FeedStoreSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = E774B6FA2E6939AF00673CBB /* FeedStoreSpy.swift */; };
+		E77DE4752E7E714E0009E26E /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E77DE4742E7E714E0009E26E /* RealmSwift */; };
 		E788F9902E597FB100888881 /* URLSessionHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E788F98F2E597FB100888881 /* URLSessionHTTPClient.swift */; };
 		E7890A142E64030E00F76F38 /* CacheFeedUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7890A132E64030E00F76F38 /* CacheFeedUseCaseTests.swift */; };
 		E793DC632E6BF8590016B47D /* RemoteFeedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E793DC622E6BF8520016B47D /* RemoteFeedItem.swift */; };
@@ -77,6 +79,19 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		E77DE4772E7E71580009E26E /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		080EDEF121B6DA7E00813479 /* EssentialFeed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EssentialFeed.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		080EDEF521B6DA7E00813479 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -85,6 +100,7 @@
 		080EDF0B21B6DAE800813479 /* FeedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedImage.swift; sourceTree = "<group>"; };
 		080EDF0D21B6DCB600813479 /* FeedLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedLoader.swift; sourceTree = "<group>"; };
 		E701DF4D2E7E62EC00376698 /* RealmFeedStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmFeedStoreTests.swift; sourceTree = "<group>"; };
+		E701DF502E7E6CF300376698 /* RealmFeedStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmFeedStore.swift; sourceTree = "<group>"; };
 		E7283D042E7460A10008F36F /* FeedStoreSpecs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedStoreSpecs.swift; sourceTree = "<group>"; };
 		E7283D072E7463B30008F36F /* XCTestCase+FeedStoreSpecs..swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+FeedStoreSpecs..swift"; sourceTree = "<group>"; };
 		E7283D092E7543A10008F36F /* XCTestCase+FailableRetrieveFeedStoreSpecs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+FailableRetrieveFeedStoreSpecs.swift"; sourceTree = "<group>"; };
@@ -131,6 +147,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E77DE4752E7E714E0009E26E /* RealmSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -215,6 +232,14 @@
 			path = "Feed Feature";
 			sourceTree = "<group>";
 		};
+		E701DF4F2E7E6CE400376698 /* Realm */ = {
+			isa = PBXGroup;
+			children = (
+				E701DF502E7E6CF300376698 /* RealmFeedStore.swift */,
+			);
+			path = Realm;
+			sourceTree = "<group>";
+		};
 		E7283D102E7545F30008F36F /* FeedStoreSpecs */ = {
 			isa = PBXGroup;
 			children = (
@@ -230,6 +255,7 @@
 		E7283D1F2E76E51F0008F36F /* Infrastructure */ = {
 			isa = PBXGroup;
 			children = (
+				E701DF4F2E7E6CE400376698 /* Realm */,
 				E7283D212E76E5B30008F36F /* Codable */,
 				E7283D202E76E5590008F36F /* CoreData */,
 			);
@@ -335,6 +361,7 @@
 				080EDEED21B6DA7E00813479 /* Sources */,
 				080EDEEE21B6DA7E00813479 /* Frameworks */,
 				080EDEEF21B6DA7E00813479 /* Resources */,
+				E77DE4772E7E71580009E26E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -446,7 +473,7 @@
 			);
 			mainGroup = 080EDEE721B6DA7E00813479;
 			packageReferences = (
-				E701DF422E7E56EE00376698 /* XCRemoteSwiftPackageReference "realm-swift" */,
+				E77DE4712E7E714E0009E26E /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			productRefGroup = 080EDEF221B6DA7E00813479 /* Products */;
 			projectDirPath = "";
@@ -497,6 +524,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E7283D232E76E6390008F36F /* CoreDataHelpers.swift in Sources */,
+				E701DF512E7E6CF700376698 /* RealmFeedStore.swift in Sources */,
 				E7FF38E12E4EDF11006A110B /* FeedItemsMapper.swift in Sources */,
 				080EDF0E21B6DCB600813479 /* FeedLoader.swift in Sources */,
 				E793DC632E6BF8590016B47D /* RemoteFeedItem.swift in Sources */,
@@ -638,6 +666,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACH_O_TYPE = mh_dylib;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -702,6 +731,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACH_O_TYPE = mh_dylib;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -960,7 +990,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		E701DF422E7E56EE00376698 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+		E77DE4712E7E714E0009E26E /* XCRemoteSwiftPackageReference "realm-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/realm/realm-swift.git";
 			requirement = {
@@ -969,6 +999,14 @@
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E77DE4742E7E714E0009E26E /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E77DE4712E7E714E0009E26E /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		E7283D172E7589560008F36F /* FeedStore.xcdatamodeld */ = {

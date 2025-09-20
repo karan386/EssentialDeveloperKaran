@@ -8,12 +8,6 @@
 import XCTest
 import EssentialFeed
 
-private final class RealmFeedStore {
-    func retrieve(completion: @escaping FeedStore.retrieveErrorCompletion) {
-        completion(.empty)
-    }
-}
-
 final class RealmFeedStoreTests: XCTestCase, FeedStoreSpecs {
     
     func test_retrieve_deliversEmptyOnEmptyCache() {
