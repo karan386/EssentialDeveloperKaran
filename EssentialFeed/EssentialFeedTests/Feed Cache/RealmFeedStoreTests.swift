@@ -36,7 +36,24 @@ final class RealmFeedStoreTests: XCTestCase, FeedStoreSpecs {
     }
     
     func test_retrieve_hasNoSideEffectsOnEmptyCache() {
+        let sut = RealmFeedStore()
         
+        let exp = expectation(description: "wait for retrieve to execute")
+        
+        sut.retrieve { retrievedFirstData in
+            sut.retrieve { retrievedSecondData in
+                switch (retrievedFirstData, retrievedSecondData) {
+                case (.empty, .empty):
+                    break
+                default:
+                    XCTFail("Found value instead of empty")
+                }
+                
+                exp.fulfill()
+            }
+        }
+        
+        wait(for: [exp], timeout: 1.0)
     }
     
     func test_retrieve_deliversFoundValuesOnNonEmptyCache() {
