@@ -10,6 +10,7 @@
 		080EDEFB21B6DA7E00813479 /* EssentialFeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 080EDEF121B6DA7E00813479 /* EssentialFeed.framework */; };
 		080EDF0C21B6DAE800813479 /* FeedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080EDF0B21B6DAE800813479 /* FeedImage.swift */; };
 		080EDF0E21B6DCB600813479 /* FeedLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080EDF0D21B6DCB600813479 /* FeedLoader.swift */; };
+		E701DF4E2E7E62EC00376698 /* RealmFeedStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E701DF4D2E7E62EC00376698 /* RealmFeedStoreTests.swift */; };
 		E7283D062E7463500008F36F /* FeedStoreSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7283D042E7460A10008F36F /* FeedStoreSpecs.swift */; };
 		E7283D082E7463B30008F36F /* XCTestCase+FeedStoreSpecs..swift in Sources */ = {isa = PBXBuildFile; fileRef = E7283D072E7463B30008F36F /* XCTestCase+FeedStoreSpecs..swift */; };
 		E7283D0A2E7543A10008F36F /* XCTestCase+FailableRetrieveFeedStoreSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7283D092E7543A10008F36F /* XCTestCase+FailableRetrieveFeedStoreSpecs.swift */; };
@@ -83,6 +84,7 @@
 		080EDF0121B6DA7E00813479 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		080EDF0B21B6DAE800813479 /* FeedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedImage.swift; sourceTree = "<group>"; };
 		080EDF0D21B6DCB600813479 /* FeedLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedLoader.swift; sourceTree = "<group>"; };
+		E701DF4D2E7E62EC00376698 /* RealmFeedStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmFeedStoreTests.swift; sourceTree = "<group>"; };
 		E7283D042E7460A10008F36F /* FeedStoreSpecs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedStoreSpecs.swift; sourceTree = "<group>"; };
 		E7283D072E7463B30008F36F /* XCTestCase+FeedStoreSpecs..swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+FeedStoreSpecs..swift"; sourceTree = "<group>"; };
 		E7283D092E7543A10008F36F /* XCTestCase+FailableRetrieveFeedStoreSpecs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+FailableRetrieveFeedStoreSpecs.swift"; sourceTree = "<group>"; };
@@ -275,6 +277,7 @@
 				E7E718A12E6938C2000CD081 /* LoadFeedFromCacheUseCaseTests..swift */,
 				E7CFC5A92E6D91E100DDBCAF /* ValidateFeedCacheUseCaseTests.swift */,
 				E7DED1932E71304C00F65B22 /* CodableFeedStoreTests.swift */,
+				E701DF4D2E7E62EC00376698 /* RealmFeedStoreTests.swift */,
 			);
 			path = "Feed Cache";
 			sourceTree = "<group>";
@@ -442,6 +445,9 @@
 				Base,
 			);
 			mainGroup = 080EDEE721B6DA7E00813479;
+			packageReferences = (
+				E701DF422E7E56EE00376698 /* XCRemoteSwiftPackageReference "realm-swift" */,
+			);
 			productRefGroup = 080EDEF221B6DA7E00813479 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -530,6 +536,7 @@
 				E7283D162E7578AB0008F36F /* CoreDataFeedStoreTests..swift in Sources */,
 				E7283D062E7463500008F36F /* FeedStoreSpecs.swift in Sources */,
 				E7BCE4A62E580A350067D148 /* XCTestCase+MemoryLeakTracking.swift in Sources */,
+				E701DF4E2E7E62EC00376698 /* RealmFeedStoreTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -951,6 +958,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E701DF422E7E56EE00376698 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCVersionGroup section */
 		E7283D172E7589560008F36F /* FeedStore.xcdatamodeld */ = {
