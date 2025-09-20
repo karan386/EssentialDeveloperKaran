@@ -23,8 +23,7 @@ final class RealmFeedStoreTests: XCTestCase, FeedStoreSpecs {
     
     func test_retrieve_hasNoSideEffectsOnEmptyCache() {
         let sut = makeSUT()
-        expect(from: sut, expectedResult: .empty)
-        expect(from: sut, expectedResult: .empty)
+        expect(from: sut, retrieveTwice: .empty)
     }
     
     func test_retrieve_deliversFoundValuesOnNonEmptyCache() {
@@ -89,5 +88,10 @@ final class RealmFeedStoreTests: XCTestCase, FeedStoreSpecs {
         }
         
         wait(for: [exp], timeout: 1.0)
+    }
+    
+    private func expect(from sut: RealmFeedStore, retrieveTwice expectedResult: RetrieveCacheFeedResult, file: StaticString = #file, line: UInt = #line) {
+        expect(from: sut, expectedResult: expectedResult, file: file, line: line)
+        expect(from: sut, expectedResult: expectedResult, file: file, line: line)
     }
 }
