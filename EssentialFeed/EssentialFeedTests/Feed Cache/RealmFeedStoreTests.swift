@@ -18,42 +18,13 @@ final class RealmFeedStoreTests: XCTestCase, FeedStoreSpecs {
     
     func test_retrieve_deliversEmptyOnEmptyCache() {
         let sut = makeSUT()
-        
-        let exp = expectation(description: "wait for retrieve to execute")
-        
-        sut.retrieve { retrievedData in
-            switch retrievedData {
-            case .empty:
-                break
-            default:
-                XCTFail("Found value instead of empty")
-            }
-            
-            exp.fulfill()
-        }
-        
-        wait(for: [exp], timeout: 1.0)
+        expect(from: sut, expectedResult: .empty)
     }
     
     func test_retrieve_hasNoSideEffectsOnEmptyCache() {
         let sut = makeSUT()
-        
-        let exp = expectation(description: "wait for retrieve to execute")
-        
-        sut.retrieve { retrievedFirstData in
-            sut.retrieve { retrievedSecondData in
-                switch (retrievedFirstData, retrievedSecondData) {
-                case (.empty, .empty):
-                    break
-                default:
-                    XCTFail("Found value instead of empty")
-                }
-                
-                exp.fulfill()
-            }
-        }
-        
-        wait(for: [exp], timeout: 1.0)
+        expect(from: sut, expectedResult: .empty)
+        expect(from: sut, expectedResult: .empty)
     }
     
     func test_retrieve_deliversFoundValuesOnNonEmptyCache() {
@@ -97,9 +68,26 @@ final class RealmFeedStoreTests: XCTestCase, FeedStoreSpecs {
     }
     
     // MARK: Helper
-    private func makeSUT(ile: StaticString = #file, line: UInt = #line) -> RealmFeedStore {
+    private func makeSUT(file: StaticString = #file, line: UInt = #line) -> RealmFeedStore {
         let sut = RealmFeedStore()
-        trackForMemoryLeaks(sut)
+        trackForMemoryLeaks(sut, file: file, line: line)
         return sut
+    }
+    
+    private func expect(from sut: RealmFeedStore, expectedResult: RetrieveCacheFeedResult , file: StaticString = #file, line: UInt = #line) {
+        let exp = expectation(description: "wait for retrieve to execute")
+        
+        sut.retrieve { receivedResult in
+            switch (receivedResult, expectedResult) {
+            case (.empty, .empty):
+                break
+            default:
+                XCTFail("Found value instead of empty")
+            }
+            
+            exp.fulfill()
+        }
+        
+        wait(for: [exp], timeout: 1.0)
     }
 }
