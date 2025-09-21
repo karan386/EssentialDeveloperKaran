@@ -51,7 +51,7 @@ public final class RealmFeedStore: FeedStore {
     
     let queue = DispatchQueue(label: "Run realm operations", qos: .userInteractive, attributes: .concurrent)
     
-    public func retrieve(completion: @escaping FeedStore.retrieveErrorCompletion) {
+    public func retrieve(completion: @escaping retrieveErrorCompletion) {
         queue.async() { [weak self] in
             guard let self = self else { return }
             do {
@@ -69,7 +69,7 @@ public final class RealmFeedStore: FeedStore {
         }
     }
     
-    public func insert(_ items: [LocalFeedImage], timestamp: Date, completion: @escaping FeedStore.insertionErrorCompletion) {
+    public func insert(_ items: [LocalFeedImage], timestamp: Date, completion: @escaping insertionErrorCompletion) {
         queue.async(flags: .barrier) { [weak self] in
             guard let self = self else { return }
             do {
@@ -86,7 +86,7 @@ public final class RealmFeedStore: FeedStore {
         }
     }
     
-    public func deleteCachedFeed(completion: @escaping FeedStore.deletionErrorCompletion) {
+    public func deleteCachedFeed(completion: @escaping deletionErrorCompletion) {
         queue.async(flags: .barrier) { [weak self] in
             guard let self = self else { return }
             do {
