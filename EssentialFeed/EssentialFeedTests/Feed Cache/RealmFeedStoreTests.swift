@@ -90,52 +90,6 @@ final class RealmFeedStoreTests: XCTestCase, FeedStoreSpecs {
         return sut
     }
     
-    private func insert(from sut: RealmFeedStore, cache: ([LocalFeedImage], Date), file: StaticString = #file, line: UInt = #line) {
-        let exp = expectation(description: "wait for insert to complete")
-        
-        sut.insert(cache.0, timestamp: cache.1) { receivedError in
-            XCTAssertNil(receivedError)
-            exp.fulfill()
-        }
-                
-        wait(for: [exp], timeout: 1.0)
-    }
-    
-    private func delete(from sut: RealmFeedStore, file: StaticString = #file, line: UInt = #line) {
-        let exp = expectation(description: "wait for deletion to complete")
-        sut.deleteCachedFeed { deletionError in
-            XCTAssertNil(deletionError)
-            exp.fulfill()
-        }
-        
-        wait(for: [exp], timeout: 1.0)
-    }
-    
-    private func expect(from sut: RealmFeedStore, expectedResult: RetrieveCacheFeedResult, file: StaticString = #file, line: UInt = #line) {
-        let exp = expectation(description: "wait for retrieve to execute")
-        
-        sut.retrieve { retrievedResult in
-            switch (expectedResult, retrievedResult) {
-            case (.empty, .empty):
-                break
-            case let (.found(expectedFeed, expectedTimestamp), .found(retrievedFeed, retrievedTimestamp)):
-                XCTAssertEqual(retrievedFeed, expectedFeed, file: file, line: line)
-                XCTAssertEqual(retrievedTimestamp, expectedTimestamp, file: file, line: line)
-            default:
-                XCTFail("Expected to retrieve \(expectedResult), got \(retrievedResult) instead", file: file, line: line)
-            }
-            
-            exp.fulfill()
-        }
-        
-        wait(for: [exp], timeout: 1.0)
-    }
-    
-    private func expect(from sut: RealmFeedStore, retrieveTwice expectedResult: RetrieveCacheFeedResult, file: StaticString = #file, line: UInt = #line) {
-        expect(from: sut, expectedResult: expectedResult, file: file, line: line)
-        expect(from: sut, expectedResult: expectedResult, file: file, line: line)
-    }
-    
     private func testSpecificStoreURL() -> URL {
         let filename = "RealmFeedStoreTests.store" // fixed safe name
         let tempDir = URL(fileURLWithPath: NSTemporaryDirectory())
