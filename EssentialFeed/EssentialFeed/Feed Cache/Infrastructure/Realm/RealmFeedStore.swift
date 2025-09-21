@@ -10,39 +10,6 @@ import Foundation
 
 public final class RealmFeedStore: FeedStore {
     
-    @objc(RealmCache)
-    class PersistedCache: Object {
-        @Persisted var timestamp: Date
-        @Persisted var feed: List<PersistedFeedImage>
-        
-        var localFeed: [LocalFeedImage] {
-            return feed.compactMap { ($0).local }
-        }
-    }
-    
-    @objc(RealmFeedImage)
-    class PersistedFeedImage: Object {
-        @Persisted var id: UUID
-        @Persisted var imageDescription: String?
-        @Persisted var location: String?
-        @Persisted var urlString: String
-        
-        // Computed property to access as URL
-        var url: URL {
-            get {
-                return URL(string: urlString)!
-            }
-            set {
-                urlString = newValue.absoluteString
-            }
-        }
-        
-        internal var local: LocalFeedImage {
-            return LocalFeedImage(id: id, description: imageDescription, location: location, url: url)
-        }
-    }
-    
-    
     private let storeURL: URL
     
     public init(storeURL: URL) {
@@ -77,7 +44,7 @@ public final class RealmFeedStore: FeedStore {
                 
                 try realm.write {
                     realm.delete(realm.objects(PersistedCache.self))
-                    realm.add(self.convert(from: items, timestamp: timestamp))
+                    realm.add(PersistedCache.convert(from: items, timestamp: timestamp))
                 }
                 completion(nil)
             } catch {
@@ -99,24 +66,5 @@ public final class RealmFeedStore: FeedStore {
                 completion(error)
             }
         }
-    }
-    
-    private func convert(from local: [LocalFeedImage], timestamp: Date) -> PersistedCache {
-        let cache = PersistedCache()
-        cache.timestamp = timestamp
-        
-        let realmFeedImaage = local.map { localImage -> PersistedFeedImage in
-            let realImage = PersistedFeedImage()
-            realImage.id = localImage.id
-            realImage.imageDescription = localImage.description
-            realImage.location = localImage.location
-            realImage.url = localImage.url
-            
-            return realImage
-        }
-        
-        cache.feed.append(objectsIn: realmFeedImaage)
-        
-        return cache
     }
 }
