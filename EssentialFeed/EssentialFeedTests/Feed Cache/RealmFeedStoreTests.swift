@@ -134,7 +134,19 @@ final class RealmFeedStoreTests: XCTestCase, FeedStoreSpecs {
     }
     
     func test_delete_emptiesPreviouslyInsertedCache() {
+        let sut = makeSUT()
         
+        insert(from: sut, cache: (uniqueImageFeed().local, Date()))
+        
+        let exp = expectation(description: "wait for deletion to complete")
+        sut.deleteCachedFeed { deletionError in
+            XCTAssertNil(deletionError)
+            exp.fulfill()
+        }
+        
+        wait(for: [exp], timeout: 1.0)
+        
+        expect(from: sut, expectedResult: .empty)
     }
     
     func test_storeSideEffects_runSerially() {

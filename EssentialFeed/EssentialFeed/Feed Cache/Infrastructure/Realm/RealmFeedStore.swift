@@ -87,7 +87,18 @@ public final class RealmFeedStore {
     }
     
     public func deleteCachedFeed(completion: @escaping FeedStore.deletionErrorCompletion) {
-        return completion(nil)
+        queue.async(flags: .barrier) { [weak self] in
+            guard let self = self else { return }
+            do {
+                let realm = try Realm(configuration: Realm.Configuration(fileURL: self.storeURL, deleteRealmIfMigrationNeeded: true))
+                try realm.write {
+                    realm.delete(realm.objects(RealmCache.self))
+                }
+                completion(nil)
+            } catch {
+                completion(error)
+            }
+        }
     }
     
     private func convert(from local: [LocalFeedImage], timestamp: Date) -> RealmCache {
