@@ -8,7 +8,7 @@
 import RealmSwift
 import Foundation
 
-public final class RealmFeedStore {
+public final class RealmFeedStore: FeedStore {
     
     @objc(RealmCache)
     class RealmCache: Object {
