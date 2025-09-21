@@ -36,29 +36,20 @@ final class RealmFeedStoreTests: XCTestCase, FeedStoreSpecs {
         let sut = makeSUT()
         let feed = uniqueImageFeed()
         let timestamp = Date()
-        let exp = expectation(description: "wait for insert to complete")
+        let cache = (feed.local, timestamp)
         
-        sut.insert(feed.local, timestamp: timestamp) { receivedError in
-            exp.fulfill()
-        }
+        insert(from: sut, cache: cache)
         
         expect(from: sut, expectedResult: .found(feed.local, timestamp))
-        
-        wait(for: [exp], timeout: 1.0)
     }
     
     func test_retrieve_hasNoSideEffectsOnNonEmptyCache() {
         let sut = makeSUT()
         let feed = uniqueImageFeed()
         let timestamp = Date()
-        let exp = expectation(description: "wait for insert to complete")
+        let cache = (feed.local, timestamp)
         
-        sut.insert(feed.local, timestamp: timestamp) { receivedError in
-            XCTAssertNil(receivedError)
-            exp.fulfill()
-        }
-                
-        wait(for: [exp], timeout: 1.0)
+        insert(from: sut, cache: cache)
         
         expect(from: sut, retrieveTwice: .found(feed.local, timestamp))
     }
@@ -101,6 +92,17 @@ final class RealmFeedStoreTests: XCTestCase, FeedStoreSpecs {
         let sut = RealmFeedStore(storeURL: identifier)
         trackForMemoryLeaks(sut, file: file, line: line)
         return sut
+    }
+    
+    private func insert(from sut: RealmFeedStore, cache: ([LocalFeedImage], Date), file: StaticString = #file, line: UInt = #line) {
+        let exp = expectation(description: "wait for insert to complete")
+        
+        sut.insert(cache.0, timestamp: cache.1) { receivedError in
+            XCTAssertNil(receivedError)
+            exp.fulfill()
+        }
+                
+        wait(for: [exp], timeout: 1.0)
     }
     
     private func expect(from sut: RealmFeedStore, expectedResult: RetrieveCacheFeedResult, file: StaticString = #file, line: UInt = #line) {
