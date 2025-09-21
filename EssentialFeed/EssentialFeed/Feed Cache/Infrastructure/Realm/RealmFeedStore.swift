@@ -86,6 +86,10 @@ public final class RealmFeedStore {
         }
     }
     
+    public func deleteCachedFeed(completion: @escaping FeedStore.deletionErrorCompletion) {
+        return completion(nil)
+    }
+    
     private func convert(from local: [LocalFeedImage], timestamp: Date) -> RealmCache {
         let cache = RealmCache()
         cache.timestamp = timestamp
