@@ -54,12 +54,13 @@ final class RealmFeedStoreTests: XCTestCase, FeedStoreSpecs {
         let exp = expectation(description: "wait for insert to complete")
         
         sut.insert(feed.local, timestamp: timestamp) { receivedError in
+            XCTAssertNil(receivedError)
             exp.fulfill()
         }
-        
-        expect(from: sut, retrieveTwice: .found(feed.local, timestamp))
                 
         wait(for: [exp], timeout: 1.0)
+        
+        expect(from: sut, retrieveTwice: .found(feed.local, timestamp))
     }
     
     func test_insert_deliversNoErrorOnEmptyCache() {
@@ -102,24 +103,6 @@ final class RealmFeedStoreTests: XCTestCase, FeedStoreSpecs {
         return sut
     }
     
-    private func testSpecificStoreURL() -> URL {
-        let filename = "RealmFeedStoreTests.store" // fixed safe name
-        let tempDir = URL(fileURLWithPath: NSTemporaryDirectory())
-        return tempDir.appendingPathComponent(filename)
-    }
-    
-    private func setupEmptyStoreState() {
-        deleteStoreArtifacts()
-    }
-    
-    private func undoStoreSideEffects() {
-        deleteStoreArtifacts()
-    }
-    
-    private func deleteStoreArtifacts() {
-        try? FileManager.default.removeItem(at: testSpecificStoreURL())
-    }
-    
     private func expect(from sut: RealmFeedStore, expectedResult: RetrieveCacheFeedResult, file: StaticString = #file, line: UInt = #line) {
         let exp = expectation(description: "wait for retrieve to execute")
         
@@ -143,5 +126,23 @@ final class RealmFeedStoreTests: XCTestCase, FeedStoreSpecs {
     private func expect(from sut: RealmFeedStore, retrieveTwice expectedResult: RetrieveCacheFeedResult, file: StaticString = #file, line: UInt = #line) {
         expect(from: sut, expectedResult: expectedResult, file: file, line: line)
         expect(from: sut, expectedResult: expectedResult, file: file, line: line)
+    }
+    
+    private func testSpecificStoreURL() -> URL {
+        let filename = "RealmFeedStoreTests.store" // fixed safe name
+        let tempDir = URL(fileURLWithPath: NSTemporaryDirectory())
+        return tempDir.appendingPathComponent(filename)
+    }
+    
+    private func setupEmptyStoreState() {
+        deleteStoreArtifacts()
+    }
+    
+    private func undoStoreSideEffects() {
+        deleteStoreArtifacts()
+    }
+    
+    private func deleteStoreArtifacts() {
+        try? FileManager.default.removeItem(at: testSpecificStoreURL())
     }
 }
