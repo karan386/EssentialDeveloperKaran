@@ -92,25 +92,13 @@ final class RealmFeedStoreTests: XCTestCase, FeedStoreSpecs {
     func test_delete_deliversNoErrorOnEmptyCache() {
         let sut = makeSUT()
         
-        let exp = expectation(description: "wait for deletion to complete")
-        sut.deleteCachedFeed { deletionError in
-            XCTAssertNil(deletionError)
-            exp.fulfill()
-        }
-        
-        wait(for: [exp], timeout: 1.0)
+        delete(from: sut)
     }
     
     func test_delete_hasNoSideEffectsOnEmptyCache() {
         let sut = makeSUT()
         
-        let exp = expectation(description: "wait for deletion to complete")
-        sut.deleteCachedFeed { deletionError in
-            XCTAssertNil(deletionError)
-            exp.fulfill()
-        }
-        
-        wait(for: [exp], timeout: 1.0)
+        delete(from: sut)
         
         expect(from: sut, retrieveTwice: .empty)
     }
@@ -124,13 +112,7 @@ final class RealmFeedStoreTests: XCTestCase, FeedStoreSpecs {
         
         insert(from: sut, cache: cache)
         
-        let exp = expectation(description: "wait for deletion to complete")
-        sut.deleteCachedFeed { deletionError in
-            XCTAssertNil(deletionError)
-            exp.fulfill()
-        }
-        
-        wait(for: [exp], timeout: 1.0)
+        delete(from: sut)
     }
     
     func test_delete_emptiesPreviouslyInsertedCache() {
@@ -138,13 +120,7 @@ final class RealmFeedStoreTests: XCTestCase, FeedStoreSpecs {
         
         insert(from: sut, cache: (uniqueImageFeed().local, Date()))
         
-        let exp = expectation(description: "wait for deletion to complete")
-        sut.deleteCachedFeed { deletionError in
-            XCTAssertNil(deletionError)
-            exp.fulfill()
-        }
-        
-        wait(for: [exp], timeout: 1.0)
+        delete(from: sut)
         
         expect(from: sut, expectedResult: .empty)
     }
@@ -169,6 +145,16 @@ final class RealmFeedStoreTests: XCTestCase, FeedStoreSpecs {
             exp.fulfill()
         }
                 
+        wait(for: [exp], timeout: 1.0)
+    }
+    
+    private func delete(from sut: RealmFeedStore, file: StaticString = #file, line: UInt = #line) {
+        let exp = expectation(description: "wait for deletion to complete")
+        sut.deleteCachedFeed { deletionError in
+            XCTAssertNil(deletionError)
+            exp.fulfill()
+        }
+        
         wait(for: [exp], timeout: 1.0)
     }
     
