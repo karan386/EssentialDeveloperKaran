@@ -48,7 +48,18 @@ final class RealmFeedStoreTests: XCTestCase, FeedStoreSpecs {
     }
     
     func test_retrieve_hasNoSideEffectsOnNonEmptyCache() {
+        let sut = makeSUT()
+        let feed = uniqueImageFeed()
+        let timestamp = Date()
+        let exp = expectation(description: "wait for insert to complete")
         
+        sut.insert(feed.local, timestamp: timestamp) { receivedError in
+            exp.fulfill()
+        }
+        
+        expect(from: sut, retrieveTwice: .found(feed.local, timestamp))
+                
+        wait(for: [exp], timeout: 1.0)
     }
     
     func test_insert_deliversNoErrorOnEmptyCache() {
@@ -108,7 +119,6 @@ final class RealmFeedStoreTests: XCTestCase, FeedStoreSpecs {
     private func deleteStoreArtifacts() {
         try? FileManager.default.removeItem(at: testSpecificStoreURL())
     }
-    
     
     private func expect(from sut: RealmFeedStore, expectedResult: RetrieveCacheFeedResult, file: StaticString = #file, line: UInt = #line) {
         let exp = expectation(description: "wait for retrieve to execute")
