@@ -142,6 +142,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		E78AA65F2E82799000180A61 /* EssentialFeedRealmIntegrationTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = EssentialFeedRealmIntegrationTests; sourceTree = "<group>"; };
 		E7A25D292E78F47B0028F1DA /* EssentialFeedCacheIntegrationTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = EssentialFeedCacheIntegrationTests; sourceTree = "<group>"; };
 		E7B394C12E5B359400C391CE /* EssentialFeedAPIEndToEndTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = EssentialFeedAPIEndToEndTests; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -187,6 +188,7 @@
 			children = (
 				080EDEF321B6DA7E00813479 /* EssentialFeed */,
 				080EDEFE21B6DA7E00813479 /* EssentialFeedTests */,
+				E78AA65F2E82799000180A61 /* EssentialFeedRealmIntegrationTests */,
 				E7B394C12E5B359400C391CE /* EssentialFeedAPIEndToEndTests */,
 				E7A25D292E78F47B0028F1DA /* EssentialFeedCacheIntegrationTests */,
 				080EDEF221B6DA7E00813479 /* Products */,
@@ -433,6 +435,7 @@
 				E7B394C62E5B359400C391CE /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
+				E78AA65F2E82799000180A61 /* EssentialFeedRealmIntegrationTests */,
 				E7B394C12E5B359400C391CE /* EssentialFeedAPIEndToEndTests */,
 			);
 			name = EssentialFeedAPIEndToEndTests;
