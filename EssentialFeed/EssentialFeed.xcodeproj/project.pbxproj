@@ -46,7 +46,7 @@
 		E7DA0A852E4A420B00FD2C6D /* RemoteFeedLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7DA0A842E4A420B00FD2C6D /* RemoteFeedLoader.swift */; };
 		E7DED1942E71304C00F65B22 /* CodableFeedStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7DED1932E71304C00F65B22 /* CodableFeedStoreTests.swift */; };
 		E7DED19E2E7316EA00F65B22 /* CodableFeedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7DED19D2E7316EA00F65B22 /* CodableFeedStore.swift */; };
-		E7E3EBCA2EA0F89500213109 /* EssentialFeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 080EDEF121B6DA7E00813479 /* EssentialFeed.framework */; platformFilter = ios; };
+		E7E3EBD32EA0FC9300213109 /* EssentialFeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 080EDEF121B6DA7E00813479 /* EssentialFeed.framework */; platformFilter = ios; };
 		E7E718A22E6938C2000CD081 /* LoadFeedFromCacheUseCaseTests..swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E718A12E6938C2000CD081 /* LoadFeedFromCacheUseCaseTests..swift */; };
 		E7FF38DD2E4EDE16006A110B /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FF38DC2E4EDE16006A110B /* HTTPClient.swift */; };
 		E7FF38E12E4EDF11006A110B /* FeedItemsMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FF38E02E4EDF11006A110B /* FeedItemsMapper.swift */; };
@@ -170,7 +170,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E7E3EBCA2EA0F89500213109 /* EssentialFeed.framework in Frameworks */,
+				E7E3EBD32EA0FC9300213109 /* EssentialFeed.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -975,6 +975,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4WRLQPP3K6;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
@@ -996,6 +997,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4WRLQPP3K6;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
